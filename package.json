@@ -5,25 +5,25 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "async": "2.3.0",
-    "body-parser": "1.15.2",
-    "express": "^4.16.3",
-    "https": "1.0.0",
-    "mongoose": "4.12.4",
-    "mongoose-auto-number": "1.0.2",
-    "mongoose-rest-query": "0.1.7",
-    "mongoose-sanitize-json": "1.0.1",
-    "morgan": "1.7.0",
-    "multiparty": "^4.2.1"
+    "async": "^3.2.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "https": "^1.0.0",
+    "mongoose": "^5.12.11",
+    "mongoose-auto-number": "^2.0.0",
+    "mongoose-rest-query": "^0.1.27",
+    "mongoose-sanitize-json": "^2.0.0",
+    "morgan": "^1.10.0",
+    "multiparty": "^4.2.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "stylelint": "^13.3.3",
-    "stylelint-config-standard": "^20.0.0",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.3",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0",
     "stylelint-csstree-validator": "^1.9.0",
-    "stylelint-scss": "^3.17.2"
+    "stylelint-scss": "^3.19.0"
   }
 }
