@@ -8,6 +8,9 @@ var userSchema = new Schema({
   pets: [{
     type: Schema.Types.ObjectId,
     ref: "PetSchema"
+  }],
+  messages: [{
+    text: String
   }]
 }, {
   usePushEach: true

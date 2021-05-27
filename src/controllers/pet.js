@@ -5,6 +5,7 @@ var createPet = function(req, res) {
   var petModel = mrq.model(req, "PetSchema");
   petModel.create(req.body, function(error, pet) {
     if (pet) {
+      console.log(req.params);
       userModel.findById(req.params.id, function(error, user) {
         if (user) {
           user.pets.push(pet._id);
@@ -20,4 +21,4 @@ var createPet = function(req, res) {
   })
 }
 
-module.exports = createPet;
+module.exports = { createPet: createPet };

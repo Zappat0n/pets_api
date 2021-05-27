@@ -3,6 +3,7 @@ bodyparser = require('body-parser'),
 mongoose = require('mongoose'),
 mrq = require('mongoose-rest-query'),
 restify = mrq.restify,
+petRouter = require('./routes/pet'),
 app = express();
 
 mongoose.Promise = global.Promise;
@@ -24,12 +25,12 @@ app.use(express.static('public'));
 
 app.use('/schema/users', restify('UserSchema'));
 app.use('/schema/pets', restify('PetSchema'));
-app.post('/controller/createPet/:id', require('./controllers/pet'));
+app.use('/controller/pet', petRouter(require('./controllers/pet')));
 
 app.get('/', function(req,res) {
   console.log('Here we go!');
   res.send({});
-})
+});
 
 var server = app.listen(5500, function(){
   console.log('Port', 5500);
