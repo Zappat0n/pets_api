@@ -1,10 +1,11 @@
-var mongoose = require('mongoose'),
-Schema = mongoose.Schema,
-sanitizeJson = require('mongoose-sanitize-json');
+import mongoose from 'mongoose';
+import sanitizeJson from 'mongoose-sanitize-json';
 
-var petSchema = new Schema({
+const { Schema } = mongoose;
+
+const petSchema = new Schema({
   name: String,
 });
 
 petSchema.plugin(sanitizeJson);
-module.exports = petSchema;
+export default petSchema;

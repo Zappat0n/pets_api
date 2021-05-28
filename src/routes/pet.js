@@ -1,10 +1,11 @@
-var express = require('express');
+import { Router } from 'express';
 
-function route(controller) {
-  var router = express.Router();
-  router.route("/:id")
-    .post(controller.createPet);
+const route = (controller) => {
+  const router = Router();
+  router.route('/:id')
+    .post(controller.createPet)
+    .get(controller.getPets);
   return router;
-}
+};
 
-module.exports = route;
+export default route;

@@ -1,20 +1,21 @@
-var mongoose = require('mongoose'),
-Schema = mongoose.Schema,
-sanitizeJson = require('mongoose-sanitize-json');
+import mongoose from 'mongoose';
+import sanitizeJson from 'mongoose-sanitize-json';
 
-var userSchema = new Schema({
+const { Schema } = mongoose;
+
+const userSchema = new Schema({
   email: String,
   password: String,
   pets: [{
     type: Schema.Types.ObjectId,
-    ref: "PetSchema"
+    ref: 'PetSchema',
   }],
   messages: [{
-    text: String
-  }]
+    text: String,
+  }],
 }, {
-  usePushEach: true
+  usePushEach: true,
 });
 
 userSchema.plugin(sanitizeJson);
-module.exports = userSchema;
+export default userSchema;

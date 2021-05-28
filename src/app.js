@@ -1,37 +1,43 @@
-var express = require('express'),
-bodyparser = require('body-parser'),
-mongoose = require('mongoose'),
-mrq = require('mongoose-rest-query'),
-restify = mrq.restify,
-petRouter = require('./routes/pet'),
-app = express();
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import mrq from 'mongoose-rest-query';
+import morgan from 'morgan';
+import model from './model/index.js';
+import petRouter from './routes/pet.js';
+import petController from './controllers/pet.js';
+
+const { restify } = mrq;
+
+const app = express();
 
 mongoose.Promise = global.Promise;
-app.use(require('morgan')('tiny'));
+app.use(morgan('tiny'));
+
 app.use(mrq.db);
 
-mrq.config.modelSchemas = require('./model');
+mrq.config.modelSchemas = model;
 
-app.use(bodyparser.json({
-  limit: '100mb'
+app.use(bodyParser.json({
+  limit: '100mb',
 }));
 
-app.use(bodyparser.raw({
+app.use(bodyParser.raw({
   type: 'binary/octet-stream',
-  limit: '10mb'
+  limit: '10mb',
 }));
 
 app.use(express.static('public'));
 
 app.use('/schema/users', restify('UserSchema'));
 app.use('/schema/pets', restify('PetSchema'));
-app.use('/controller/pet', petRouter(require('./controllers/pet')));
+app.use('/controller/pet', petRouter(petController));
 
-app.get('/', function(req,res) {
+app.get('/', (req, res) => {
   console.log('Here we go!');
   res.send({});
 });
 
-var server = app.listen(5500, function(){
+app.listen(5500, () => {
   console.log('Port', 5500);
 });
