@@ -1,24 +1,39 @@
-var mrq = require("mongoose-rest-query");
+import mrq from 'mongoose-rest-query';
 
-var createPet = function(req, res) {
-  var userModel = mrq.model(req, "UserSchema");
-  var petModel = mrq.model(req, "PetSchema");
-  petModel.create(req.body, function(error, pet) {
+const createPet = (req, res) => {
+  const userModel = mrq.model(req, 'UserSchema');
+  const petModel = mrq.model(req, 'PetSchema');
+  petModel.create(req.body, (error, pet) => {
     if (pet) {
       console.log(req.params);
-      userModel.findById(req.params.id, function(error, user) {
+      userModel.findById(req.params.id, (error, user) => {
         if (user) {
           user.pets.push(pet._id);
           user.save();
-          res.send("Success");
+          res.send('Success');
         } else {
-          res.send("User not found");
+          res.send('User not found');
         }
-      })
+      });
     } else {
-      res.send("Pet not found");
+      res.send('Pet not found');
     }
-  })
-}
+  });
+};
 
-module.exports = { createPet: createPet };
+const getPets = (req, res) => {
+  const userModel = mrq.model(req, 'UserSchema');
+  userModel.findById(req.params.id)
+    .select('pets')
+    .populate('pets')
+    .exec((error, user) => {
+      if (user) {
+        console.log(user);
+        res.send(user.pets);
+      } else {
+        res.send('User not found');
+      }
+    });
+};
+
+export default { createPet, getPets };
