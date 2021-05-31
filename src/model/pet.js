@@ -5,6 +5,10 @@ const { Schema } = mongoose;
 
 const petSchema = new Schema({
   name: String,
+  petType: {
+    type: String,
+    enum: ['dog', 'cat', 'fish', 'turtle'],
+  },
 });
 
 petSchema.plugin(sanitizeJson);

@@ -6,7 +6,7 @@ const createPet = (req, res) => {
   petModel.create(req.body, (error, pet) => {
     if (pet) {
       console.log(req.params);
-      userModel.findById(req.params.id, (error, user) => {
+      userModel.findById(req.params.userId, (error, user) => {
         if (user) {
           user.pets.push(pet._id);
           user.save();
@@ -23,17 +23,32 @@ const createPet = (req, res) => {
 
 const getPets = (req, res) => {
   const userModel = mrq.model(req, 'UserSchema');
-  userModel.findById(req.params.id)
+  userModel.findById(req.params.userId)
     .select('pets')
-    .populate('pets')
+    .populate({
+      path: 'pets',
+      select: 'name',
+    })
     .exec((error, user) => {
       if (user) {
         console.log(user);
-        res.send(user.pets);
+        res.status(200).send(user.pets);
       } else {
-        res.send('User not found');
+        res.status(404).send('User not found');
       }
     });
 };
 
-export default { createPet, getPets };
+const updatePet = (req, res) => {
+  const petModel = mrq.model(req, 'PetSchema');
+  petModel.findByIdAndUpdate(req.params.petId, req.body, (error, pet) => {
+    if (pet) {
+      console.log(req.params);
+      res.status(200).send(pet);
+    } else {
+      res.status(500).send('Pet not updated');
+    }
+  });
+};
+
+export default { createPet, getPets, updatePet };
