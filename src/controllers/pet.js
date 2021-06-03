@@ -51,4 +51,22 @@ const updatePet = (req, res) => {
   });
 };
 
-export default { createPet, getPets, updatePet };
+const deletePet = (req, res) => {
+  const userModel = mrq.model(req, 'UserSchema');
+  const petModel = mrq.model(req, 'PetSchema');
+  petModel.deleteOne({ _id: req.params.petId }, (error) => {
+    if (!error) {
+      userModel.updateOne({ _id: req.params.userId, $pull: { pets: req.params.petId } }, (err) => {
+        if (!err) {
+          res.send(req.params.petId);
+        } else {
+          res.send('user not udpated');
+        }
+      });
+    } else {
+      res.send('Pet not deleted');
+    }
+  });
+};
+
+export default { createPet, deletePet, getPets, updatePet };
